@@ -149,3 +149,77 @@ const Clock2: ClockConstructor = class Clock implements ClockInterface {
 
     }
 };
+
+/** Extending Interfaces */
+interface Shape {
+    color: string;
+}
+
+interface PenStroke {
+    penWidth: number;
+}
+
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+let square = {} as Square;
+square.color = 'Red';
+square.penWidth = 2;
+square.sideLength = 3;
+
+/** Hybrid Types */
+interface Counter {
+    (start: number): string;
+
+    interval: number;
+
+    reset(): void;
+}
+
+function getCounter(): Counter {
+    const counter = (start => "foo") as Counter;
+    counter.interval = 123;
+    counter.reset = () => undefined;
+    return counter;
+}
+
+let counter = getCounter();
+counter(10);
+console.log(counter.interval);
+counter.reset();
+
+/** Interfaces Extending Classes */
+class A {
+    private state: boolean;
+}
+
+class B extends A {
+
+}
+
+let b = new B();
+// b.state;    // Error
+
+// When an interface type extends a class type it inherits the members of the class but not their
+// implementations.
+class Control {
+    private state: any;
+}
+
+interface SelectableControl extends Control {
+    select(): void;
+}
+
+class Button extends Control implements SelectableControl {
+    select(): void {
+    }
+}
+
+class TextBox extends Control {
+    select() {
+    }
+}
+
+let button: SelectableControl = new Button();
+let textBox: SelectableControl = new TextBox();
