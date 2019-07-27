@@ -28,3 +28,31 @@ let y3 = () => ({name: "Alice", location: "Seattle"});
 
 x3 = y3; // OK
 // y3 = x3; // Error, because x() lacks a location property
+
+// Function parameter bivariance
+interface EventPlus {
+    timestamp: number
+}
+
+interface MouseEventPro extends EventPlus {
+    x: number;
+    y: number
+}
+
+interface KeyEventPlus extends EventPlus {
+    keyCode: number
+}
+
+function listenEvent(handler: (e: EventPlus) => void) {
+    handler({timestamp: 300});
+}
+
+// Unsound, but useful and common
+listenEvent((e: MouseEventPro) => console.log(e.x, e.y));
+
+// Undesirable alternatives in presence of soundness
+listenEvent((e: EventPlus) => console.log((<MouseEventPro>e).x + ',' + (<MouseEventPro>e).y));
+listenEvent(<(e: EventPlus) => void>((e: MouseEventPro) => console.log(e.x, e.y)));
+
+// Optional Parameters and Rest Parameters
+
