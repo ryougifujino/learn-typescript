@@ -26,3 +26,37 @@ let t10: T10;
 let _t10: string | (() => void) = t10;
 type T12 = TypeName<string | string[] | undefined>;  // "string" | "object" | "undefined"
 type T11 = TypeName<string[] | number[]>;  // "object"
+
+// references to T within the conditional type are resolved to individual constituents of the union
+// type. Furthermore, references to T within X have an additional type parameter constraint U
+// (i.e. T is considered assignable to U within X
+type BoxedValue<T> = { value: T };
+type BoxedArray<T> = { value: T[] };
+type Boxed<T> = T extends any[] ? BoxedArray<T[number]> : BoxedValue<T>;    // 注意为true的情况时T是一个数组，所以要用T[number]把它变成元素类型
+type T20 = Boxed<string>;  // BoxedValue<string>;
+type T21 = Boxed<number[]>;  // BoxedArray<number>;
+type T22 = Boxed<string | number[]>;  // BoxedValue<string> | BoxedArray<number>;
+
+// The distributive property of conditional types can conveniently be used to filter union types:
+type Diff<T, U> = T extends U ? never : T;  // Remove types from T that are assignable to U
+type Filter<T, U> = T extends U ? T : never;    // Remove types from T that are not assignable to U
+type T30 = Diff<"a" | "b" | "c" | "d", "a" | "c" | "f">;  // "b" | "d"
+type T31 = Filter<"a" | "b" | "c" | "d", "a" | "c" | "f">;  // "a" | "c"
+type T32 = Diff<string | number | (() => void), Function>;  // string | number
+type T33 = Filter<string | number | (() => void), Function>;  // () => void
+
+type MyNonNullable<T> = Diff<T, null | undefined>;  // Remove null and undefined from T
+type T34 = MyNonNullable<string | number | undefined>;  // string | number
+type T35 = MyNonNullable<string | string[] | null | undefined>;  // string | string[]
+
+function f1<T>(x: T, y: MyNonNullable<T>) {
+    x = y;  // Ok
+    y = x;  // Error
+}
+
+function f2<T extends string | undefined>(x: T, y: MyNonNullable<T>) {
+    x = y;  // Ok
+    y = x;  // Error
+    let s1: string = x;  // Error
+    let s2: string = y;  // Ok
+}
