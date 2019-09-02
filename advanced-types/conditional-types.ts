@@ -50,13 +50,33 @@ type T34 = MyNonNullable<string | number | undefined>;  // string | number
 type T35 = MyNonNullable<string | string[] | null | undefined>;  // string | string[]
 
 function f1<T>(x: T, y: MyNonNullable<T>) {
-    x = y;  // Ok
-    y = x;  // Error
+    // x = y;  // Ok
+    // y = x;  // Error
 }
 
-function f2<T extends string | undefined>(x: T, y: MyNonNullable<T>) {
-    x = y;  // Ok
-    y = x;  // Error
-    let s1: string = x;  // Error
-    let s2: string = y;  // Ok
+function f2<T extends string | undefined>(x1: T, y1: MyNonNullable<T>) {
+    // x = y;  // Ok
+    // y = x;  // Error
+    // let s1: string = x;  // Error
+    // let s2: string = y;  // Ok
 }
+
+// Conditional types are particularly useful when combined with mapped types:
+type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T];
+type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>;
+
+type NonFunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
+type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+
+interface Part {
+    id: number;
+    name: string;
+    subparts: Part[];
+    updatePart: (nameName: string) => void;
+}
+
+type T40 = FunctionPropertyNames<Part>;  // "updatePart"
+type T41 = NonFunctionPropertyNames<Part>;  // "id" | "name" | "subparts"
+type T42 = FunctionProperties<Part>;  // { updatePart(newName: string): void }
+type T43 = NonFunctionProperties<Part>;  // { id: number, name: string, subparts: Part[] }
+// conditional types are not permitted to reference themselves recursively
