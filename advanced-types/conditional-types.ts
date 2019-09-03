@@ -80,3 +80,16 @@ type T41 = NonFunctionPropertyNames<Part>;  // "id" | "name" | "subparts"
 type T42 = FunctionProperties<Part>;  // { updatePart(newName: string): void }
 type T43 = NonFunctionProperties<Part>;  // { id: number, name: string, subparts: Part[] }
 // conditional types are not permitted to reference themselves recursively
+
+// - Type inference in conditional types
+type Unpacked<T> =
+    T extends (infer U)[] ? U :
+        T extends (...args: any[]) => infer U ? U :
+            T extends Promise<infer U> ? U :
+                T;
+type T50 = Unpacked<string>;  // string
+type T51 = Unpacked<string[]>;  // string
+type T52 = Unpacked<() => string>;  // string
+type T53 = Unpacked<Promise<string>>;  // string
+type T54 = Unpacked<Promise<string>[]>;  // Promise<string>
+type T55 = Unpacked<Unpacked<Promise<string>[]>>;  // string
