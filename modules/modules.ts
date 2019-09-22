@@ -15,3 +15,7 @@ const zipCodeValidator = new validator.ZipCodeValidator();
 zipCodeValidator.isAcceptable('0');
 
 /** export = and import = require() */
+import Zip = require("./ZipCodeValidator2");
+
+const zipValidator = new Zip();
+
