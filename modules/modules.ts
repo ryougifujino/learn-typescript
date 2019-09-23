@@ -19,3 +19,18 @@ import Zip = require("./ZipCodeValidator2");
 
 const zipValidator = new Zip();
 
+/** Optional Module Loading and Other Advanced Loading Scenarios */
+// Dynamic Module Loading in Node.js
+declare function require(moduleName: string): any;
+
+// For this pattern to work, it’s important that the symbol defined via an import is only used in
+// type positions (i.e. never in a position that would be emitted into the JavaScript).
+import {ZipCodeValidator as Zip2} from "./ZipCodeValidator";
+
+let needZipValidation;
+if (needZipValidation) {
+    let ZipCodeValidator: typeof Zip2 = require("./ZipCodeValidator");
+    let validator = new ZipCodeValidator();
+    if (validator.isAcceptable("...")) { /* ... */
+    }
+}
