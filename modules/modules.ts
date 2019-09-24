@@ -34,3 +34,24 @@ if (needZipValidation) {
     if (validator.isAcceptable("...")) { /* ... */
     }
 }
+
+/** Working with Other JavaScript Libraries */
+// Ambient Modules
+// @ts-ignore
+import * as URL from "url";
+
+let myUrl = URL.parse("http://www.typescriptlang.org");
+
+// Shorthand ambient modules
+// @ts-ignore
+import x, {y} from "hot-new-module";
+// All imports from a shorthand module will have the any type.
+x(y);
+
+// UMD modules
+import {isPrime} from "./math-lib";
+
+isPrime(2);
+// @ts-ignore
+// NOTE: only inside of a script, here is just a showing
+mathLib.isPrime(2);
