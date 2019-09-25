@@ -55,3 +55,18 @@ isPrime(2);
 // @ts-ignore
 // NOTE: only inside of a script, here is just a showing
 mathLib.isPrime(2);
+
+/** Guidance for structuring modules */
+// - Export as close to top-level as possible
+// Use the namespace import pattern if you’re importing a large number of things
+/*
+    // MyLargeModule.ts
+    export class Dog { ... }
+    export class Cat { ... }
+    export class Tree { ... }
+    export class Flower { ... }
+
+    // Consumer.ts
+    import * as myLargeModule from "./MyLargeModule.ts";
+    let x = new myLargeModule.Dog();
+ */
