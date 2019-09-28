@@ -32,3 +32,14 @@ for (let s of strings) {
         console.log(`"${s}" - ${validators[name].isAcceptable(s) ? "matches" : "does not match"} ${name}`);
     }
 }
+
+/** Splitting Across Files */
+// Even though the files are separate, they can each contribute to the same namespace and can be
+// consumed as if they were all defined in one place.
+// See Test.ts
+
+// --outFile flag to compile all of the input files into a single JavaScript output file:
+// tsc --outFile sample.js Test.ts
+// tsc --outFile sample.js Validation.ts LettersOnlyValidator.ts ZipCodeValidator.ts Test.ts
+
+// Alternatively, we can use per-file compilation (the default) to emit one JavaScript file for each input file.
