@@ -43,3 +43,43 @@ for (let s of strings) {
 // tsc --outFile sample.js Validation.ts LettersOnlyValidator.ts ZipCodeValidator.ts Test.ts
 
 // Alternatively, we can use per-file compilation (the default) to emit one JavaScript file for each input file.
+
+/** Aliases */
+// use import q = x.y.z to create shorter names
+namespace Shapes {
+    export namespace Polygons {
+        export class Triangle {
+        }
+
+        export class Square {
+        }
+    }
+}
+
+import polygons = Shapes.Polygons;
+
+let sq = new polygons.Square(); // Same as 'new Shapes.Polygons.Square()'
+
+/** Working with Other JavaScript Libraries */
+declare namespace D3 {
+    export interface Selectors {
+        select: {
+            (selector: string): Selection;
+            (element: EventTarget): Selection;
+        };
+    }
+
+    export interface Event {
+        x: number;
+        y: number;
+    }
+
+    export interface Base extends Selectors {
+        event: Event;
+    }
+}
+
+declare var d3: D3.Base;
+let selectors: D3.Selectors = {
+    select: (selector: string | EventTarget) => ({} as Selection)
+};
