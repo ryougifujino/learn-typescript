@@ -105,3 +105,8 @@ import { Component } from "@angular/core";
 /node_modules/moduleB/index.tsx
 /node_modules/moduleB/index.d.ts
 */
+
+/** Additional module resolution flags */
+// It is important to note that the compiler will not perform any of these transformations; it just
+// uses these pieces of information to guide the process of resolving a module import to its definition file.
+// Base URL
