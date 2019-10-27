@@ -110,3 +110,9 @@ import { Component } from "@angular/core";
 // It is important to note that the compiler will not perform any of these transformations; it just
 // uses these pieces of information to guide the process of resolving a module import to its definition file.
 // Base URL
+/*
+Value of baseUrl is determined as either:
+- value of baseUrl command line argument (if given path is relative, it is computed based on current directory)
+- value of baseUrl property in ‘tsconfig.json’ (if given path is relative, it is computed based on the location of ‘tsconfig.json’)
+*/
+// Path mapping
