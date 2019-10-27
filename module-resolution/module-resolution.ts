@@ -116,3 +116,13 @@ Value of baseUrl is determined as either:
 - value of baseUrl property in ‘tsconfig.json’ (if given path is relative, it is computed based on the location of ‘tsconfig.json’)
 */
 // Path mapping
+const tsconfigJson =
+    {
+        "compilerOptions": {
+            "baseUrl": ".", // This must be specified if "paths" is.
+            // "paths" are resolved relative to "baseUrl"
+            "paths": {
+                "jquery": ["node_modules/jquery/dist/jquery"] // This mapping is relative to "baseUrl"
+            }
+        }
+    };
