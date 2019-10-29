@@ -115,6 +115,7 @@ Value of baseUrl is determined as either:
 - value of baseUrl command line argument (if given path is relative, it is computed based on current directory)
 - value of baseUrl property in ‘tsconfig.json’ (if given path is relative, it is computed based on the location of ‘tsconfig.json’)
 */
+
 // Path mapping
 const tsconfigJson =
     {
@@ -124,5 +125,30 @@ const tsconfigJson =
             "paths": {
                 "jquery": ["node_modules/jquery/dist/jquery"] // This mapping is relative to "baseUrl"
             }
+        }
+    };
+
+// Virtual Directories with rootDirs
+// Using ‘rootDirs’, you can inform the compiler of the roots making up this “virtual” directory;
+// and thus the compiler can resolve relative modules imports within these “virtual” directories as
+// if were merged together in one directory.
+/*
+src
+ └── views
+     └── view1.ts (imports './template1')
+     └── view2.ts
+
+ generated
+ └── templates
+         └── views
+             └── template1.ts (imports './view2')
+*/
+const tsconfigJson2 =
+    {
+        "compilerOptions": {
+            "rootDirs": [
+                "src/views",
+                "generated/templates/views"
+            ]
         }
     };
