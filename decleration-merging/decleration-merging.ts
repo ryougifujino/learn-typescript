@@ -98,3 +98,28 @@ namespace Animal {
         // return haveMuscles;  // Error, because haveMuscles is not accessible here
     }
 }
+
+/** Merging Namespaces with Classes, Functions, and Enums */
+// The namespace declaration must follow the declaration it will merge with.
+
+// - Merging Namespaces with Classes
+// a way of describing inner classes
+class Album {
+    label: Album.AlbumLabel
+}
+namespace Album {
+    export class AlbumLabel {
+    }
+}
+
+// creating a function and then extending the function further by adding properties onto the function
+function buildLabel(name: string): string {
+    return buildLabel.prefix + name + buildLabel.suffix;
+}
+
+namespace buildLabel {
+    export let suffix = "";
+    export let prefix = "Hello, ";
+}
+
+console.log(buildLabel("Sam Smith"));
