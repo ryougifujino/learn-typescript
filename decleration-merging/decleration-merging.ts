@@ -123,3 +123,20 @@ namespace buildLabel {
 }
 
 console.log(buildLabel("Sam Smith"));
+
+/** Module Augmentation */
+import {Observable} from "./observable";
+/*
+Observable.prototype.map = function (f) {
+
+};
+// TS2339: Property 'map' does not exist on type 'Observable<any>'
+*/
+declare module './observable' {
+    interface Observable<T> {
+        map<U>(f: (x: T) => U): Observable<U>;
+    }
+}
+Observable.prototype.map = function (f) {
+    return null;
+};
