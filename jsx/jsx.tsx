@@ -81,6 +81,29 @@ function NotAValidFactoryFunction() {
 <NotAValidFactoryFunction />; // error
 
 // - Attribute type checking
+// For intrinsic elements, it is the type of the property on JSX.IntrinsicElements
+declare namespace JSX {
+    interface IntrinsicElements {
+        foo: { bar?: boolean }
+    }
+}
+<foo bar />
+
+// For value-based elements, it is determined by the type of a property on the element instance type
+// that was previously determined. Which property to use is determined by JSX.ElementAttributesProperty.
+declare namespace JSX {
+    interface ElementAttributesProperty {
+        props;  // specify the property name to use
+    }
+}
+
+class MyComponent {
+    props: {
+        foo?: string;
+    }
+}
+// element attributes type for 'MyComponent' is '{foo?: string}'
+<MyComponent foo="bar" />
 
 // - Children type checking
 
