@@ -13,3 +13,13 @@ You won’t see:
 - Calls to define(...)
 - Documentation describing how to require or import the library
 */
+
+// - Modular Libraries
+
+// - UMD
+
+// - Module Plugin or UMD Plugin
+
+// - Global Plugin
+
+/** Consuming Dependencies */
