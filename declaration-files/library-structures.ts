@@ -15,6 +15,28 @@ You won’t see:
 */
 
 // - Modular Libraries
+/*
+// Node.js
+var fs = require("fs");
+
+// TypeScript or ES6
+import fs = require("fs");
+
+//
+var someLib = require('someLib');
+
+define(..., ['someLib'], function(someLib) {
+
+});
+
+Modular libraries will typically have at least some of the following:
+- Unconditional calls to require or define
+- Declarations like import * as a from 'b'; or export c;
+- Assignments to exports or module.exports
+
+They will rarely have:
+- Assignments to properties of window or global
+*/
 
 // - UMD
 
@@ -22,4 +44,14 @@ You won’t see:
 
 // - Global Plugin
 
+// - Global-modifying Modules
+
 /** Consuming Dependencies */
+
+// - Dependencies on Global Libraries
+
+// - Dependencies on Modules
+
+// - Dependencies on UMD libraries
+
+/** Footnotes */
