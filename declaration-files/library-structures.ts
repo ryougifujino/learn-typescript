@@ -80,8 +80,33 @@ declare module 'someModule' {
 */
 
 // - Global Plugin
+// A global plugin is global code that changes the shape of some global.
+/*
+var x = "hello, world";
+// Creates new methods on built-in types
+console.log(x.startsWithHello());
+
+var y = [1, 2, 3];
+// Creates new methods on built-in types
+console.log(y.reverseAndSort());
+*/
 
 // - Global-modifying Modules
+// A global-modifying module alters existing values in the global scope when they are imported.
+/*
+// 'require' call that doesn't use its return value
+var unused = require("magic-string-time");
+// or
+require("magic-string-time");
+
+var x = "hello, world";
+// Creates new methods on built-in types
+console.log(x.startsWithHello());
+
+var y = [1, 2, 3];
+// Creates new methods on built-in types
+console.log(y.reverseAndSort());
+*/
 
 /** Consuming Dependencies */
 
